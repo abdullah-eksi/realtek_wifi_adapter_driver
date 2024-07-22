@@ -1,65 +1,59 @@
-# rtl8192eu linux drivers
+# rtl8192eu Linux Sürücüleri
 
-**NOTE:** This branch is based on Realtek's driver versioned 4.4.1. `master` is based on 4.3.1.1 originally.
+**NOT:** Bu dal, Realtek'in 4.4.1 sürümüne dayanmaktadır. `master` dalı ise başlangıçta 4.3.1.1 sürümüne dayanmaktadır.
 
-The official drivers for D-Link DWA-131 Rev E, with patches to keep it working on newer kernels.
-Also works on Rosewill RNX-N180UBE v2 N300 Wireless Adapter and TP-Link TL-WN821N V6.
+Bu resmi sürücüler, D-Link DWA-131 Rev E için güncellenmiş yamalarla birlikte sunulmaktadır. Ayrıca Rosewill RNX-N180UBE v2 N300 Kablosuz Adaptör ve TP-Link TL-WN821N V6 ile de uyumludur.
 
-**NOTE:** This is just a "mirror". I have no knowledge about this code or how it works. Expect no support from me or any contributors here. I just think GitHub is a nicer way of keeping track of this than random forum posts and precompiled binaries being sent by email. I don't want someone else to have to spend 5 days of googling and compiling with random patches until it works.
+**NOT:** Bu yalnızca bir "ayna"dır. Bu kod hakkında bilgi sahibi değilim ve nasıl çalıştığını bilmiyorum. Burada benden veya herhangi bir katkı sağlayandan destek beklemeyin. GitHub'ın, forum gönderilerinden ve e-posta ile gönderilen önceden derlenmiş ikili dosyalardan daha iyi bir takip yöntemi olduğunu düşünüyorum. Başka birinin, çalışana kadar rastgele yamalarla derlemek için 5 gün harcamasını istemiyorum.
 
-## Source for the official drivers
+## Resmi Sürücülerin Kaynağı
 
-Official drivers were downloaded from D-Link Australia. D-Link USA and the european countries I checked only lists revision A and B. Australia lists all three.
+Resmi sürücüler, D-Link Avustralya'dan indirildi. D-Link ABD ve Avrupa ülkelerinde yalnızca A ve B revizyonları listelenmektedir. Avustralya ise tüm üç revizyonu listelemektedir.
 
-* [Download page for DWA-131][driver-downloads]
-* [Direct download link for Linux drivers][direct-download]
-  * GitHub will not link to the `ftp://` schema. Raw link contents:
+* [DWA-131 için indirme sayfası][driver-downloads]
+* [Linux sürücüleri için doğrudan indirme bağlantısı][direct-download]
+  * GitHub, `ftp://` şemasına bağlantı vermeyecek. Ham bağlantı içeriği:
 
       `ftp://files.dlink.com.au/products/DWA-131/REV_E/Drivers/DWA-131_Linux_driver_v4.3.1.1.zip`
 
-In addition, you can find the contents of this version in the initial commit of this repo: [1387cf623d54bc2caec533e72ee18ef3b6a1db29][initial-commit]
+Ek olarak, bu sürümün içeriğini bu deponun ilk commit'inde bulabilirsiniz: [1387cf623d54bc2caec533e72ee18ef3b6a1db29][initial-commit]
 
-## Patches
+## Yamalar
 
-You can see the applied patches, their sources and/or motivation by looking at the commits. The `master` branch will mostly be kept clean with a single commit per patch, except for Pull Requests. You can review commit by commit and then record the SHA in order to get a safe reference to use. As long as the SHA stays the same you know that what you get has been reviewed by you.
+Uygulanan yamaları, kaynaklarını ve motivasyonlarını commit'lere bakarak görebilirsiniz. `master` dalı, çoğunlukla her yama için tek bir commit ile temiz tutulacaktır. Commit'leri inceleyip SHA'yı kaydedebilir ve kullanmak için güvenli bir referans alabilirsiniz. SHA aynı kaldığı sürece, ne elde ettiğinizin sizin tarafınızdan incelendiğini bilirsiniz.
 
-Note that updates to this README will show up as separate commits. I will not mix changes to this file with changes to the code in case you want to mirror this without the README.
+Bu README dosyasındaki güncellemeler ayrı commit'ler olarak görünecektir. Bu dosyadaki değişiklikleri, koddaki değişikliklerle karıştırmayacağım, böylece README'yi olmadan aynalamak isterseniz kolayca yapabilirsiniz.
 
-## Building and installing using DKMS
+## DKMS ile Derleme ve Kurulum
 
-This tree supports Dynamic Kernel Module Support (DKMS), a system for
-generating kernel modules from out-of-tree kernel sources. It can be used to
-install/uninstall kernel modules, and the module will be automatically rebuilt
-from source when the kernel is upgraded (for example using your package manager).
+Bu ağaç, dinamik çekirdek modül desteğini (DKMS) destekler. Çekirdek modüllerini çekirdek kaynaklarından oluşturmaya yarayan bir sistemdir. Çekirdek modüllerini kurmak/kaldırmak için kullanılabilir ve çekirdek yükseltildiğinde (örneğin paket yöneticinizi kullanarak) modül otomatik olarak yeniden derlenir.
 
-1. Install DKMS and other required tools
+1. DKMS ve diğer gerekli araçları yükleyin.
 
-    * for normal Linux systems
+    * Normal Linux sistemleri için
 
     ```shell
     sudo apt-get install git linux-headers-generic build-essential dkms
     ```
 
-    * for Raspberry Pi
+    * Raspberry Pi için
 
     ```shell
     sudo apt-get install git raspberrypi-kernel-headers build-essential dkms
     ```
-    
-    Make sure you're installing same headers version as your current running kernel. If you just installed Raspbian it ships with an older kernel version than you'll get headers for after installing `raspberrypi-kernel-headers`. You must either run `sudo apt-get upgrade` or install exact same `raspberrypi-kernel-headers-XXX` version as your kernel is before executing `dkms install`. If you have version mismatch you'll get "Your kernel headers for kernel XXX cannot be found at YYY" error.
 
-2. Clone this repository and change your directory to cloned path.
+    Aynı başlık sürümünü şu an çalışan çekirdeğinizle yüklediğinizden emin olun. Yeni bir Raspbian kurduysanız, çekirdeğinizle uyumsuz eski bir başlık sürümüyle gelir. `sudo apt-get upgrade` komutunu çalıştırmalı veya `raspberrypi-kernel-headers-XXX` sürümünü çekirdeğinizle uyumlu olacak şekilde yüklemelisiniz. Sürüm uyuşmazlığı varsa "Çekirdek başlıklarınız çekirdek XXX için YYY'de bulunamıyor" hatası alırsınız.
+
+2. Bu depoyu klonlayın ve klonlanan yola gidin.
 
     ```shell
     git clone https://github.com/Mange/rtl8192eu-linux-driver
-    ```
-    ```shell
     cd rtl8192eu-linux-driver
     ```
 
-3. The Makefile is preconfigured to handle most x86/PC versions. However, if you are compiling for something other than an intel x86 architecture, you need to first select the platform.
+3. Makefile, çoğu x86/PC sürümü için önceden yapılandırılmıştır. Ancak, intel x86 mimarisinden başka bir şey için derliyorsanız önce platformu seçmelisiniz.
 
-    * for the Raspberry Pi, you need to set the I386 to n and the ARM_RPI to y:
+    * Raspberry Pi için I386'yi n ve ARM_RPI'yi y olarak ayarlamalısınız:
 
     ```sh
     ...
@@ -68,7 +62,7 @@ from source when the kernel is upgraded (for example using your package manager)
     CONFIG_PLATFORM_ARM_RPI = y
     ```
 
-    * for arm64 devices (e.g. Orange Pi PC 2):
+    * arm64 cihazlar için (örn. Orange Pi PC 2):
 
     ```sh
     ...
@@ -77,127 +71,124 @@ from source when the kernel is upgraded (for example using your package manager)
     CONFIG_PLATFORM_ARM_AARCH64 = y
     ```
 
-4. Add the driver to DKMS. This will copy the source to a system directory so
-that it can used to rebuild the module on kernel upgrades.
+4. Sürücüyü DKMS'ye ekleyin. Bu, kaynakları sistem dizinine kopyalayacak ve çekirdek yükseltmelerinde modülün yeniden derlenmesini sağlayacaktır.
 
     ```shell
     sudo dkms add .
     ```
 
-5. Build and install the driver.
+5. Sürücüyü derleyin ve kurun.
 
     ```shell
     sudo dkms install rtl8192eu/1.0
     ```
 
-6. Distributions based on Debian & Ubuntu have RTL8XXXU driver present & running in kernelspace. To use our RTL8192EU driver, we need to blacklist RTL8XXXU.
+6. Debian ve Ubuntu tabanlı dağıtımlarda RTL8XXXU sürücüsü çekirdek alanında mevcuttur ve çalışır durumda. RTL8192EU sürücümüzü kullanmak için RTL8XXXU'yu kara listeye almalıyız.
 
     ```shell
     echo "blacklist rtl8xxxu" | sudo tee /etc/modprobe.d/rtl8xxxu.conf
     ```
 
-7. Force RTL8192EU Driver to be active from boot.
+7. RTL8192EU sürücüsünü boot sırasında etkinleştirin.
+
     ```shell
     echo -e "8192eu\n\nloop" | sudo tee /etc/modules
     ```
 
-8. Newer versions of Ubuntu has weird plugging/replugging issue (Check #94). This includes weird idling issues, To fix this:
+8. Yeni Ubuntu sürümlerinde takma/yeniden takma sorunu var (Bkz #94). Bu, garip bekleme sorunlarını içerir. Bunu düzeltmek için:
 
     ```shell
     echo "options 8192eu rtw_power_mgnt=0 rtw_enusbss=0" | sudo tee /etc/modprobe.d/8192eu.conf
     ```
 
-9. Update changes to Grub & initramfs
+9. Grub ve initramfs değişikliklerini güncelleyin.
 
     ```shell
     sudo update-grub; sudo update-initramfs -u
     ```
 
-10. Reboot system to load new changes from newly generated initramfs.
+10. Yeni oluşturulan initramfs'den yeni değişiklikleri yüklemek için sistemi yeniden başlatın.
 
     ```shell
     systemctl reboot -i
     ```
 
-11. Check that your kernel has loaded the right module:
- 
+11. Çekirdeğinizin doğru modülü yüklediğini kontrol edin:
+
     ```shell
     sudo lshw -c network
     ```
-   
-You should see the line ```driver=8192eu```
-    
-If you wish to uninstall the driver at a later point, use
-_sudo dkms uninstall rtl8192eu/1.0_. To completely remove the driver from DKMS use
-_sudo dkms remove rtl8192eu/1.0 --all_.
 
-## Using as AP
+    Şu satırı görmelisiniz: `driver=8192eu`
 
-Reference: Intelbras IWA 3001 USB WiFi Adapter  
-Devices using the 8192eu chip can serve as decent access points, with speeds up to ~50Mbps.  
- 
-Using hostapd to manage your AP, set the proper ht-capab field for this device, which is:  
+Sürücüyü daha sonra kaldırmak isterseniz, `sudo dkms uninstall rtl8192eu/1.0` komutunu kullanın. Sürücüyü DKMS'den tamamen kaldırmak için `sudo dkms remove rtl8192eu/1.0 --all` komutunu kullanın.
+
+## Erişim Noktası (AP) Olarak Kullanma
+
+Referans: Intelbras IWA 3001 USB WiFi Adaptörü  
+8192eu yongasını kullanan cihazlar, yaklaşık ~50Mbps hızlarında erişim noktaları olarak hizmet verebilir.  
+
+hostapd kullanarak AP'nizi yönetin ve bu cihaz için uygun ht-capab alanını ayarlayın:
 
 `HT_CAPAB=[RX-STBC1][SHORT-GI-40][SHORT-GI-20][DSSS_CCK-40][MAX-AMSDU-7935]`
 
-Optionally enable wideband, if you don't have neighbours:  
-Note that while this will result in a increase in network throughput it may cause clients further away to fail connecting.  
-It may also make the device work better with repeaters repeating its signal.  
+Geniş bantı etkinleştirmek için, komşularınız yoksa:  
+Bu, ağın verimini artıracaktır, ancak uzak mesafedeki müşterilerin bağlantı kuramamasına neden olabilir.  
+Ayrıca, cihazın sinyalini tekrarlayan tekrarlayıcılarla daha iyi çalışmasını sağlayabilir.
 
-`HT_CAPAB=[HT40+][RX-STBC1][SHORT-GI-40][SHORT-GI-20][DSSS_CCK-40][MAX-AMSDU-7935]` (for channels 1-7), or  
-`HT_CAPAB=[HT40-][RX-STBC1][SHORT-GI-40][SHORT-GI-20][DSSS_CCK-40][MAX-AMSDU-7935]` (for channels 5-13)
+`HT_CAPAB=[HT40+][RX-STBC1][SHORT-GI-40][SHORT-GI-20][DSSS_CCK-40][MAX-AMSDU-7935]` (kanallar 1-7 için) veya  
+`HT_CAPAB=[HT40-][RX-STBC1][SHORT-GI-40][SHORT-GI-20][DSSS_CCK-40][MAX-AMSDU-7935]` (kanallar 5-13 için)
 
-## Changing transmit power
+## Transmit Gücünü Değiştirme
 
-Currently there is no way to change transmit power in the driver with iw or iwconfig tools, as you would with other wireless devices.  
-The values returned by these tools are purely fictional on this driver.
-However, you can still manually change the transmit power at compile time
-by editing the file `hal/rl8192e/rtl8192e_phycfg.c` and changing the lines below:
+Şu anda, diğer kablosuz cihazlarda olduğu gibi iw veya iwconfig araçları ile sürücüde transmit gücünü değiştirme yolu yoktur.  
+Bu sürücüde dönen değerler tamamen kurgusaldır. Ancak, hala transmit gücünü manuel olarak derleme zamanında değiştirebilirsiniz, bunun için `hal/rl8192e/rtl8192e_phycfg.c` dosyasını düzenleyip aşağıdaki satırları değiştirebilirsiniz:
 
 ```
-/* Manual Transmit Power Control 
-   The following options take values from 0 to 63, where:
-   0 - disable
-   1 - lowest transmit power the device can do
-   63 - highest transmit power the device can do
-   Note that these options may override your country's regulations about transmit power.
-   Setting the device to work at higher transmit powers most of the time may cause premature 
-   failure or damage by overheating. Make sure the device has enough airflow before you increase this.
-   It is currently unknown what these values translate to in dBm.
+/* Manuel Transmit Güç Kontrolü 
+   Aşağıdaki seçenekler 0 ile 63 arasında değer alır, burada:
+   0 - devre dışı
+   1 - cihazın yapabileceği en düşük
+
+ transmit gücü
+   63 - cihazın yapabileceği en yüksek transmit gücü
+   Bu seçeneklerin, ülkenizin transmit gücü ile ilgili düzenlemelerini geçersiz kılabileceğini unutmayın.
+   Cihazı çoğu zaman daha yüksek transmit güçlerinde çalıştırmak, aşırı ısınma nedeniyle erken arızalanmaya veya hasara neden olabilir. Transmit gücünü artırmadan önce cihazın yeterli hava akışına sahip olduğundan emin olun.
+   Bu değerlerin dBm olarak ne anlama geldiği şu anda bilinmiyor.
 */
 
 
-// Transmit Power Boost
-// This value is added to the device's calculation of transmit power index.
-// Useful if you want to keep power usage low while still boosting/decreasing transmit power.
-// Can take a negative value as well to reduce power.
-// Zero disables it. Default: 2, for a tiny boost.
+// Transmit Güç Artırımı
+// Bu değer, cihazın transmit güç endeksi hesaplamalarına eklenir.
+// Güç kullanımını düşük tutarken transmit gücünü artırmak/azaltmak için kullanışlıdır.
+// Gücü azaltmak için negatif bir değer de alabilir.
+// Sıfır devre dışı bırakır. Varsayılan: 2, küçük bir artış için.
 int transmit_power_boost = 2;
-// (ADVANCED) To know what transmit powers this device decides to use dynamically, see:
+// (İLERİ DÜZEY) Bu cihazın dinamik olarak kullanmaya karar verdiği transmit güçlerini öğrenmek için bkz:
 // https://github.com/lwfinger/rtl8192ee/blob/42ad92dcc71cb15a62f8c39e50debe3a28566b5f/hal/phydm/rtl8192e/halhwimg8192e_rf.c#L1310
 
 
-// Transmit Power Override
-// This value completely overrides the driver's calculations and uses only one value for all transmissions.
-// Zero disables it. Default: 0
+// Transmit Güç Aşımı
+// Bu değer, sürücünün hesaplamalarını tamamen geçersiz kılar ve tüm iletimler için tek bir değeri kullanır.
+// Sıfır devre dışı bırakır. Varsayılan: 0
 int transmit_power_override = 0;
 
 
-/* Manual Transmit Power Control */
+/* Manuel Transmit Güç Kontrolü */
 ```
 
-## Submitting patches
+## Yama Gönderme
 
-1. Fork repo
-2. Do your patch in a topic branch
-3. Open a pull request on GH, or send it by email to `Magnus Bergmark <magnus.bergmark@gmail.com>`.
-4. I'll squash your commits when everything checks out and add it to `master`.
+1. Depoyu fork edin
+2. Yamanızı bir konu dalında yapın
+3. GH'de bir pull request açın veya e-posta ile `Magnus Bergmark <magnus.bergmark@gmail.com>` adresine gönderin.
+4. Her şey kontrol edildiğinde commit'lerinizi birleştirip `master` dalına ekleyeceğim.
 
-## Copyright and licenses
+## Telif Hakları ve Lisanslar
 
-The original code is copyrighted, but I don't know by whom. The driver download does not contain license information; please open an issue if you are the copyright holder.
+Orijinal kod telif hakkına sahiptir, ancak kimin tarafından olduğu bilinmiyor. Sürücü indirmesi lisans bilgisi içermiyor; lütfen telif hakkı sahibiyseniz bir sorun açın.
 
-Most C files are licensed under GNU General Public License (GPL), version 2.
+Çoğu C dosyası, GNU Genel Kamu Lisansı (GPL) sürüm 2 altında lisanslanmıştır.
 
 [driver-downloads]: http://support.dlink.com.au/Download/download.aspx?product=DWA-131
 [direct-download]: ftp://files.dlink.com.au/products/DWA-131/REV_E/Drivers/DWA-131_Linux_driver_v4.3.1.1.zip
