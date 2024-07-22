@@ -4,9 +4,8 @@
 
 Bu sürücü, [CGarces/rtl8192eu-linux-driver](https://github.com/CGarces/rtl8192eu-linux-driver) deposundan, Türk kullanıcılar için daha anlaşılır hale getirilerek forklanmıştır herhangi bir kötü amaç kopyalama kötüleme gibi bir amaç bulunmamaktadır.
 
---
-Aşağıda Kurulumla İlgili Gerekli Adımlar Sadeleştirilmiş ve türkçe dilini cevrilmiştir
---
+- Aşağıda Kurulumla İlgili Gerekli Adımlar Sadeleştirilmiş ve türkçe diline cevrilmiştir
+
 
 
 Bu dosya, Realtek RTL8192EU WiFi adaptörünüz için gerekli olan Linux sürücüsünü nasıl kuracağınızı anlatıyor. Bu sürücü, bilgisayarınıza bu WiFi adaptörünü tanıtmak için gereklidir.
