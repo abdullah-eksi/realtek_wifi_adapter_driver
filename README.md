@@ -50,7 +50,7 @@ Bu adımlar, sürücüyü bilgisayarınıza kurmak içindir:
    Sürücü dosyasını bilgisayarınıza indirin ve açın:
 
    ```shell
-   git clone https://github.com/Mange/rtl8192eu-linux-driver
+   git clone https://github.com/abdullah-eksi/realtek_wifi_adapter_driver
    cd rtl8192eu-linux-driver
    ```
 
