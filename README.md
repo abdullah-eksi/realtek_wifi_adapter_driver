@@ -21,9 +21,6 @@ Resmi sürücüler, D-Link’in Avustralya sitesinden indirilmiştir. Avustralya
 * [DWA-131 İndir](http://support.dlink.com.au/Download/download.aspx?product=DWA-131)
 * [Sürücü İndirme Bağlantısı](ftp://files.dlink.com.au/products/DWA-131/REV_E/Drivers/DWA-131_Linux_driver_v4.3.1.1.zip)
 
-## Yamalar
-
-Sürücüye eklenen yamalar ve yapılan değişiklikler hakkında daha fazla bilgi için bu depoyu inceleyebilirsiniz. Kodun her bir değişikliği, belirli bir değişiklik numarası (SHA) ile birlikte gelir, bu sayede yapılan değişiklikleri kolayca takip edebilirsiniz.
 
 ## DKMS ile Sürücü Kurulumu
 
